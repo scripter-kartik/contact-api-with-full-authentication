@@ -21,6 +21,7 @@ export const newContact = async (req, res) => {
         email,
         phone,
         type,
+        user: req.user
     });
 
     res.json({ message: "Contact saved successfully...!", saveContact, success: true });
@@ -62,3 +63,13 @@ export const getContactById = async (req, res) => {
 
     res.json({ message: "Contact Fetched", userContact, success: true });
 }
+
+// get contact by user id
+export const getContactByUserId = async (req, res) => {
+    const id = req.params.id;
+    const userContact = await Contact.find({user:id});
+    if (!userContact) return res.json({ message: "No Contact Find", success: false });
+
+    res.json({ message: "User Specific Contact Fetched", userContact, success: true });
+}
+
